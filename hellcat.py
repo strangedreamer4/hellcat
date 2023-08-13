@@ -37,33 +37,33 @@ class InstallerApp:
         self.progress_bar["maximum"] = len(self.dependencies)
         self.progress_bar["value"] = 0
 
-        self.progress_bar.start()
-
         self.install_next_dependency()
 
     def install_next_dependency(self):
         if self.current_dependency_index < len(self.dependencies):
             dependency = self.dependencies[self.current_dependency_index]
             self.progress_label.config(text=f"Installing {dependency}...")
-            self.root.after(1500, self.simulate_dependency_installation)
 
-    def simulate_dependency_installation(self):
-        self.progress_bar["value"] += 1
-        self.current_dependency_index += 1
-        self.install_next_dependency()
+            try:
+                subprocess.check_call(["pip3", "install", dependency])
+            except subprocess.CalledProcessError as e:
+                self.progress_label.config(text="Failed to install dependencies.")
+                return
 
-        if self.current_dependency_index == len(self.dependencies):
+            self.progress_bar["value"] += 1
+            self.current_dependency_index += 1
+            self.root.after(100, self.install_next_dependency)
+        else:
             self.progress_label.config(text="Dependencies installed.")
-            self.progress_bar.stop()
             self.display_instructions()
 
     def display_instructions(self):
-        self.instructions_label = tk.Label(self.root, text="Installation complete!\nClick the 'Run App' button to launch the chat application.", font=("Arial", 12))
+        self.instructions_label = tk.Label(self.root, text="Installation complete!\nClick the 'Run App' button to launch the HellCat application.", font=("Arial", 12))
         self.instructions_label.pack(pady=20)
 
     def launch_app(self):
         try:
-            subprocess.Popen(["python3", ".hellcat.py"])  # Launch the chat application
+            subprocess.Popen(["python3", "hellcat.py"])  # Launch the HellCat application
         except Exception as e:
             print("Error launching the app:", e)
 
