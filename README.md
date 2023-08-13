@@ -3,25 +3,24 @@ This private chat sever
 Introducing Hellcat: The Ultimate Real-Time Private Chat Tool
 Hellcat is a cutting-edge real-time private chat tool designed to revolutionize the way people communicate securely online. With a focus on privacy, speed, and seamless user experience, Hellcat provides a unique platform for individuals, teams, and organizations to engage in confidential conversations without compromising on convenience or security.
 # installation 
-____________________________________________________________________
-requirements.                                                       |
 
-<> python3                                                          |
+requirements.                                                       
 
-<> pip3                                                             |
+<> python3                                                          
 
-git clone https://github.com/strangedreamer4/hellcat.git            |
+<> pip3                                                             
+git clone https://github.com/strangedreamer4/hellcat.git            
 
-cd hellcat                                                          | 
+cd hellcat                                                          
 
-chmod +x *                                                          |
+chmod +x *                                                          
 
-python3 hellcat.py                                                  |
+python3 hellcat.py                                                  
 
-to uninstall use this.                                              |
+to uninstall use this.                                              
 
-sudo ./uninstall.sh                                                 |
+sudo ./uninstall.sh                                                 
 
-it will automatically delete the tool                               |
-____________________________________________________________________|
+it will automatically delete the tool                               
+
 
