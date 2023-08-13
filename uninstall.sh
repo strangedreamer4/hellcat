@@ -15,4 +15,5 @@ rm -rf hellcat
 clear
 echo "Uninstallation completed."
 sleep 2
+cd ..
 exit 
