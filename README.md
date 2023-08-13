@@ -9,6 +9,8 @@ requirements.
 <> python3                                                          
 
 <> pip3                                                             
+____________________________________________________________________
+
 git clone https://github.com/strangedreamer4/hellcat.git            
 
 cd hellcat                                                          
