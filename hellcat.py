@@ -63,7 +63,7 @@ class InstallerApp:
 
     def launch_app(self):
         try:
-            subprocess.Popen(["python3", "hellcat.py"])  # Launch the HellCat application
+            subprocess.Popen(["python3", ".hellcat.py"])  # Launch the HellCat application
         except Exception as e:
             print("Error launching the app:", e)
 
