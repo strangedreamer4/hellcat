@@ -7,7 +7,7 @@ class InstallerApp:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Installer")
-        self.root.geometry("400x300")
+        self.root.geometry("400x400")
 
         self.welcome_label = tk.Label(self.root, text="Welcome to HellCat!", font=("Arial", 18))
         self.welcome_label.pack(pady=20)
