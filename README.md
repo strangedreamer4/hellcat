@@ -5,14 +5,23 @@ Hellcat is a cutting-edge real-time private chat tool designed to revolutionize 
 # installation 
 ____________________________________________________________________
 requirements.                                                       |
+
 <> python3                                                          |
+
 <> pip3                                                             |
+
 git clone https://github.com/strangedreamer4/hellcat.git            |
+
 cd hellcat                                                          | 
+
 chmod +x *                                                          |
+
 python3 hellcat.py                                                  |
+
 to uninstall use this.                                              |
+
 sudo ./uninstall.sh                                                 |
+
 it will automatically delete the tool                               |
 ____________________________________________________________________|
 
