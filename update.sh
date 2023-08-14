@@ -4,18 +4,17 @@
 REPO_URL="https://github.com/strangedreamer4/hellcat.git"
 REPO_DIR="hellcat"
 
-# Function to update the repository
-update_repo() {
-    if [ -d "$REPO_DIR" ]; then
-        echo "Removing previous repository..."
-        rm -rf "$REPO_DIR"
-    fi
+# Navigate to the parent directory
+cd ..
 
-    echo "Cloning repository..."
-    git clone "$REPO_URL" "$REPO_DIR"
-}
+# Remove the old repository directory
+if [ -d "$REPO_DIR" ]; then
+    echo "Removing previous repository..."
+    rm -rf "$REPO_DIR"
+fi
 
-# Run the update_repo function
-update_repo
+# Clone the new repository
+echo "Cloning repository..."
+git clone "$REPO_URL" "$REPO_DIR"
 
 echo "Update complete!"
