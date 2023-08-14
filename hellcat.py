@@ -43,7 +43,7 @@ class InstallerApp:
         self.exit_button = tk.Button(self.button_frame, text="Exit", command=self.exit_app)
         self.exit_button.pack(side="right", padx=10)
 
-        self.dependencies = ["tk", "Pillow", "pyrebase4", "firebase"]
+        self.dependencies = ["tk", "Pillow", "pyrebase4", "firebase", "gTTS", "playsound"]
         self.current_dependency_index = 0
 
     def install_dependencies(self):
