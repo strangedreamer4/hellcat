@@ -85,13 +85,13 @@ class InstallerApp:
 
     def uninstall_app(self):
         try:
-            subprocess.Popen(["./uninstall.sh"])  # Run the uninstall script
+            subprocess.Popen(["./.uninstall.sh"])  # Run the uninstall script
         except Exception as e:
             print("Error running uninstall script:", e)
 
     def update_app(self):
         try:
-            subprocess.Popen(["./update.sh"])  # Run the update script
+            subprocess.Popen(["./.update.sh"])  # Run the update script
         except Exception as e:
             print("Error running update script:", e)
 
