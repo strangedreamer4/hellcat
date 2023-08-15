@@ -3,6 +3,9 @@ from PIL import Image, ImageTk
 import pyrebase
 import time
 import tkinter.messagebox
+from gtts import gTTS
+import playsound
+
 # Firebase configuration
 firebaseConfig = {
     "apiKey": "AIzaSyBCBUGoKQecD5R-uWc9CLs3TNa5ll9jA4M",
@@ -29,7 +32,7 @@ class ChatApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Hacker Chat Terminal")
-        self.root.geometry("1000x900")
+        self.root.geometry("10000x900")
         self.root.configure(bg="black")
 
         # Load the animation image
@@ -41,8 +44,12 @@ class ChatApp:
         # Call a function to show loading effect
         self.root.after(3000, self.show_loading_effect)
 
-    def show_loading_effect(self):
-        self.animation_label.destroy()  # Remove the animation label
+    def generate_welcome_audio(self):
+        welcome_text = "Opening Hellcat"  # Customize the welcome message
+        tts = gTTS(text=welcome_text, lang="en")
+        tts.save("welcome_message.mp3")
+
+  
 
         # Display loading message
         self.loading_label = tk.Label(self.root, text="Loading...", fg="green", bg="black")
