@@ -49,7 +49,12 @@ class ChatApp:
         tts = gTTS(text=welcome_text, lang="en")
         tts.save("welcome_message.mp3")
 
-  
+    def show_loading_effect(self):
+        self.animation_label.destroy()  # Remove the animation label
+        self.generate_welcome_audio()  # Generate the welcome audio
+
+        # Play the welcome audio
+        playsound.playsound("welcome_message.mp3", True)  # Replace with the path to your welcome message audio file
 
         # Display loading message
         self.loading_label = tk.Label(self.root, text="Loading...", fg="green", bg="black")
