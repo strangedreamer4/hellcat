@@ -29,7 +29,7 @@ class ChatApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Hacker Chat Terminal")
-        self.root.geometry("800x700")
+        self.root.geometry("1000x900")
         self.root.configure(bg="black")
 
         # Load the animation image
