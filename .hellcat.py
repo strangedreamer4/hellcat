@@ -33,7 +33,7 @@ class ChatApp:
         self.root.configure(bg="black")
 
         # Load the animation image
-        self.animation_image = Image.open(".animation.jpg")
+        self.animation_image = Image.open(".animation .jpg")
         self.animation_photo = ImageTk.PhotoImage(self.animation_image)
         self.animation_label = tk.Label(self.root, image=self.animation_photo, bg="black")
         self.animation_label.place(relx=0.5, rely=0.5, anchor="center")
