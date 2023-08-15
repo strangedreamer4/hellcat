@@ -1,12 +1,8 @@
-
 import tkinter as tk
 from PIL import Image, ImageTk
 import pyrebase
 import time
 import tkinter.messagebox
-from gtts import gTTS
-import playsound
-
 # Firebase configuration
 firebaseConfig = {
     "apiKey": "AIzaSyBCBUGoKQecD5R-uWc9CLs3TNa5ll9jA4M",
@@ -33,11 +29,11 @@ class ChatApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Hacker Chat Terminal")
-        self.root.geometry("1000x800")
+        self.root.geometry("800x700")
         self.root.configure(bg="black")
 
         # Load the animation image
-        self.animation_image = Image.open(".animation .jpg")
+        self.animation_image = Image.open(".animation.jpg")
         self.animation_photo = ImageTk.PhotoImage(self.animation_image)
         self.animation_label = tk.Label(self.root, image=self.animation_photo, bg="black")
         self.animation_label.place(relx=0.5, rely=0.5, anchor="center")
@@ -45,17 +41,8 @@ class ChatApp:
         # Call a function to show loading effect
         self.root.after(3000, self.show_loading_effect)
 
-    def generate_welcome_audio(self):
-        welcome_text = "Opening Hellcat"  # Customize the welcome message
-        tts = gTTS(text=welcome_text, lang="en")
-        tts.save("welcome_message.mp3")
-
     def show_loading_effect(self):
         self.animation_label.destroy()  # Remove the animation label
-        self.generate_welcome_audio()  # Generate the welcome audio
-
-        # Play the welcome audio
-        playsound.playsound("welcome_message.mp3", True)  # Replace with the path to your welcome message audio file
 
         # Display loading message
         self.loading_label = tk.Label(self.root, text="Loading...", fg="green", bg="black")
