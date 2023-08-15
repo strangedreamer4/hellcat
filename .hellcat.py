@@ -32,11 +32,11 @@ class ChatApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Hacker Chat Terminal")
-        self.root.geometry("10000x900")
+        self.root.geometry("1000x700")
         self.root.configure(bg="black")
 
         # Load the animation image
-        self.animation_image = Image.open(".animation .jpg")
+        self.animation_image = Image.open(".animation.jpg")
         self.animation_photo = ImageTk.PhotoImage(self.animation_image)
         self.animation_label = tk.Label(self.root, image=self.animation_photo, bg="black")
         self.animation_label.place(relx=0.5, rely=0.5, anchor="center")
