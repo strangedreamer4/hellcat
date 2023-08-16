@@ -1,3 +1,5 @@
+import os
+import sys
 import tkinter as tk
 from tkinter import ttk, messagebox
 import subprocess
@@ -8,16 +10,13 @@ class InstallerApp:
         self.root.title("Installer")
         self.root.geometry("600x200")
 
-        self.header_frame = tk.Frame(self.root)
-        self.header_frame.pack(side="top", fill="x")
-
-        self.button_frame = tk.Frame(self.root)
-        self.button_frame.pack(side="top", fill="x")
-
         self.create_header()
         self.create_buttons()
 
     def create_header(self):
+        self.header_frame = tk.Frame(self.root)
+        self.header_frame.pack(side="top", fill="x")
+
         self.welcome_label = tk.Label(self.header_frame, text="Welcome to HellCat!", font=("Arial", 18))
         self.welcome_label.pack(pady=20)
 
@@ -28,26 +27,29 @@ class InstallerApp:
         self.progress_bar.pack(pady=10)
 
     def create_buttons(self):
-        self.install_button = tk.Button(self.button_frame, text="Install", command=self.install_dependencies)
-        self.install_button.pack(side="left", padx=10)
+        self.button_frame = tk.Frame(self.root)
+        self.button_frame.pack(side="top", fill="x")
 
-        self.uninstall_button = tk.Button(self.button_frame, text="Uninstall", command=self.uninstall_app)
-        self.uninstall_button.pack(side="left", padx=10)
+        button_info = [
+            ("Install", self.install_dependencies),
+            ("Uninstall", self.uninstall_app),
+            ("Update", self.update_app),
+            ("Run App", self.launch_app),
+            ("Exit", self.exit_app)
+        ]
 
-        self.update_button = tk.Button(self.button_frame, text="Update", command=self.update_app)
-        self.update_button.pack(side="left", padx=10)
+        self.buttons = []
 
-        self.run_button = tk.Button(self.button_frame, text="Run App", command=self.launch_app)
-        self.run_button.pack(side="left", padx=10)
-
-        self.exit_button = tk.Button(self.button_frame, text="Exit", command=self.exit_app)
-        self.exit_button.pack(side="right", padx=10)
+        for text, command in button_info:
+            button = tk.Button(self.button_frame, text=text, command=command)
+            button.pack(side="left", padx=10)
+            self.buttons.append(button)
 
         self.dependencies = ["tk", "Pillow", "pyrebase4", "firebase", "gTTS", "playsound"]
         self.current_dependency_index = 0
 
     def install_dependencies(self):
-        self.install_button.config(state="disabled")
+        self.buttons[0].config(state="disabled")  # Disable "Install" button
         self.progress_label.config(text="Installing dependencies...")
 
         self.progress_bar["maximum"] = len(self.dependencies)
@@ -72,32 +74,39 @@ class InstallerApp:
         else:
             self.progress_label.config(text="Dependencies installed.")
             self.display_instructions()
+            self.restart_button = tk.Button(self.header_frame, text="Restart HellCat", command=self.restart_hellcat)
+            self.restart_button.pack(pady=10)
 
     def display_instructions(self):
-        self.instructions_label = tk.Label(self.header_frame, text="Installation complete!\nClick the 'Run App' button to launch the HellCat application.", font=("Arial", 12))
+        instructions_text = "Installation complete!\nClick the 'Run App' button to launch the HellCat application."
+        self.instructions_label = tk.Label(self.header_frame, text=instructions_text, font=("Arial", 12))
         self.instructions_label.pack(pady=20)
 
     def launch_app(self):
         try:
-            subprocess.Popen(["python3", ".hellcat.py"])  # Launch the HellCat application
+            subprocess.Popen(["python3", "hellcat.py"])  # Launch the HellCat application
         except Exception as e:
             print("Error launching the app:", e)
 
-    def uninstall_app(self):
+    def run_script(self, script_path):
         try:
-            subprocess.Popen(["./uninstall.sh"])  # Run the uninstall script
+            subprocess.Popen([script_path])
         except Exception as e:
-            print("Error running uninstall script:", e)
+            print(f"Error running {script_path}:", e)
+
+    def uninstall_app(self):
+        self.run_script("./uninstall.sh")
 
     def update_app(self):
-        try:
-            subprocess.Popen(["./update.sh"])  # Run the update script
-        except Exception as e:
-            print("Error running update script:", e)
+        self.run_script("./update.sh")
 
     def exit_app(self):
         if messagebox.askyesno("Exit", "Are you sure you want to exit?"):
             self.root.quit()
+
+    def restart_hellcat(self):
+        os.system(sys.executable + " hellcat.py")
+        self.root.quit()
 
     def run(self):
         self.root.mainloop()
