@@ -1,4 +1,3 @@
-
 import tkinter as tk
 import threading
 from PIL import Image, ImageTk
@@ -8,6 +7,7 @@ import tkinter.messagebox
 from gtts import gTTS
 import playsound
 
+# Firebase configuration
 firebaseConfig = {
     "apiKey": "AIzaSyBCBUGoKQecD5R-uWc9CLs3TNa5ll9jA4M",
     "authDomain": "vip-95a43.firebaseapp.com",
@@ -137,4 +137,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = ChatApp(root)
     root.mainloop()
-
