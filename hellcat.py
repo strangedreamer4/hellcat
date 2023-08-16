@@ -48,6 +48,14 @@ class InstallerApp:
         self.dependencies = ["tk", "Pillow", "pyrebase4", "firebase", "gTTS", "playsound"]
         self.current_dependency_index = 0
 
+    def set_execute_permissions(self):
+        scripts_to_chmod = ["hellcat.py", "uninstall.sh", "update.sh"]  # Add more scripts if needed
+        for script in scripts_to_chmod:
+            try:
+                os.chmod(script, os.stat(script).st_mode | 0o111)
+            except OSError as e:
+                print(f"Failed to set execute permission on {script}: {e}")
+
     def install_dependencies(self):
         self.buttons[0].config(state="disabled")  # Disable "Install" button
         self.progress_label.config(text="Installing dependencies...")
@@ -113,4 +121,5 @@ class InstallerApp:
 
 if __name__ == "__main__":
     app = InstallerApp()
+    app.set_execute_permissions()  # Set execute permissions before creating GUI
     app.run()
