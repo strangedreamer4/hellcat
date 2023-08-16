@@ -1,4 +1,5 @@
 import tkinter as tk
+import threading
 from PIL import Image, ImageTk
 import pyrebase
 import time
@@ -20,7 +21,6 @@ firebaseConfig = {
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 
-# Tkinter GUI
 class ChatApp:
     def __init__(self, root):
         self.root = root
@@ -28,7 +28,6 @@ class ChatApp:
         self.root.geometry("1000x700")
         self.root.configure(bg="black")
 
-       
         self.animation_image = Image.open(".animation.jpg")
         self.animation_photo = ImageTk.PhotoImage(self.animation_image)
         self.animation_label = tk.Label(self.root, image=self.animation_photo, bg="black")
@@ -42,21 +41,18 @@ class ChatApp:
         tts.save("welcome_message.mp3")
 
     def show_loading_effect(self):
-        self.animation_label.destroy()  # Remove the animation label
-        self.generate_welcome_audio()  # Generate the welcome audio
+        self.animation_label.destroy()
+        self.generate_welcome_audio()
 
-        
-        playsound.playsound("welcome_message.mp3", True)  # Replace with the path to your welcome message audio file
+        playsound.playsound("welcome_message.mp3", True)
 
-       
         self.loading_label = tk.Label(self.root, text="Loading...", fg="green", bg="black")
         self.loading_label.place(relx=0.5, rely=0.5, anchor="center")
 
-     
         self.root.after(2000, self.start_app)
 
     def start_app(self):
-        self.loading_label.destroy()  # Remove the loading label
+        self.loading_label.destroy()
 
         self.username_frame = tk.Frame(self.root, bg="black")
         self.username_frame.pack(pady=10)
@@ -93,9 +89,9 @@ class ChatApp:
         self.exit_button.pack(side=tk.LEFT, padx=10)
 
         self.messages_ref = db.child("messages")
-        self.stream = self.messages_ref.stream(self.on_message_change)
+        self.stream_thread = threading.Thread(target=self.start_stream)
+        self.stream_thread.start()
 
-        
         self.root.bind("<Return>", self.send_message)
 
     def send_message(self, event=None):
@@ -103,19 +99,26 @@ class ChatApp:
         message = self.input_field.get()
         self.input_field.delete(0, tk.END)
         if username and message:
-            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")  # Get current date and time
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
             db.child("messages").push({"username": username, "message": message, "timestamp": timestamp})
 
-    def on_message_change(self, message):
-        if message["event"] == "put":
-            data = message["data"]
-            if data:
-                username = data.get("username", "")
-                message_text = data.get("message", "")
-                timestamp = data.get("timestamp", "")
-                if username and message_text:
-                    self.messages_text.insert(tk.END, f"{timestamp} - {username}: {message_text}\n")
-                    self.messages_text.see(tk.END)
+    def start_stream(self):
+        def on_message_change(message):
+            if message["event"] == "put":
+                data = message["data"]
+                if data:
+                    username = data.get("username", "")
+                    message_text = data.get("message", "")
+                    timestamp = data.get("timestamp", "")
+                    if username and message_text:
+                        formatted_message = f"{timestamp} - {username}: {message_text}\n"
+                        self.root.after(0, self.update_message_display, formatted_message)
+
+        self.stream = self.messages_ref.stream(on_message_change)
+
+    def update_message_display(self, message):
+        self.messages_text.insert(tk.END, message)
+        self.messages_text.see(tk.END)
 
     def clear_messages(self):
         self.messages_text.delete("1.0", tk.END)
@@ -125,7 +128,6 @@ class ChatApp:
             self.stream.close()
             self.root.quit()
 
-            # Save chat history to a text file
             chat_history = self.messages_text.get("1.0", tk.END)
             with open("chat_log.txt", "w") as file:
                 file.write(chat_history)
