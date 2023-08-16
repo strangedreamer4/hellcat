@@ -6,7 +6,6 @@ import tkinter.messagebox
 from gtts import gTTS
 import playsound
 
-# Firebase configuration
 firebaseConfig = {
     "apiKey": "AIzaSyBCBUGoKQecD5R-uWc9CLs3TNa5ll9jA4M",
     "authDomain": "vip-95a43.firebaseapp.com",
@@ -21,12 +20,6 @@ firebaseConfig = {
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
-
 # Tkinter GUI
 class ChatApp:
     def __init__(self, root):
@@ -35,13 +28,12 @@ class ChatApp:
         self.root.geometry("1000x700")
         self.root.configure(bg="black")
 
-        # Load the animation image
+       
         self.animation_image = Image.open(".animation.jpg")
         self.animation_photo = ImageTk.PhotoImage(self.animation_image)
         self.animation_label = tk.Label(self.root, image=self.animation_photo, bg="black")
         self.animation_label.place(relx=0.5, rely=0.5, anchor="center")
 
-        # Call a function to show loading effect
         self.root.after(3000, self.show_loading_effect)
 
     def generate_welcome_audio(self):
@@ -53,14 +45,14 @@ class ChatApp:
         self.animation_label.destroy()  # Remove the animation label
         self.generate_welcome_audio()  # Generate the welcome audio
 
-        # Play the welcome audio
+        
         playsound.playsound("welcome_message.mp3", True)  # Replace with the path to your welcome message audio file
 
-        # Display loading message
+       
         self.loading_label = tk.Label(self.root, text="Loading...", fg="green", bg="black")
         self.loading_label.place(relx=0.5, rely=0.5, anchor="center")
 
-        # Simulate loading delay
+     
         self.root.after(2000, self.start_app)
 
     def start_app(self):
@@ -103,7 +95,7 @@ class ChatApp:
         self.messages_ref = db.child("messages")
         self.stream = self.messages_ref.stream(self.on_message_change)
 
-        # Bind Enter key to send_message function
+        
         self.root.bind("<Return>", self.send_message)
 
     def send_message(self, event=None):
@@ -125,7 +117,6 @@ class ChatApp:
                     self.messages_text.insert(tk.END, f"{timestamp} - {username}: {message_text}\n")
                     self.messages_text.see(tk.END)
 
-    
     def clear_messages(self):
         self.messages_text.delete("1.0", tk.END)
 
@@ -133,11 +124,11 @@ class ChatApp:
         if tkinter.messagebox.askyesno("Exit", "Are you sure you want to exit?"):
             self.stream.close()
             self.root.quit()
-            
-        # Save chat history to a text file
-        chat_history = self.messages_text.get("1.0", tk.END)
-        with open("chat_log.txt", "w") as file:
-            file.write(chat_history)
+
+            # Save chat history to a text file
+            chat_history = self.messages_text.get("1.0", tk.END)
+            with open("chat_log.txt", "w") as file:
+                file.write(chat_history)
 
 if __name__ == "__main__":
     root = tk.Tk()
