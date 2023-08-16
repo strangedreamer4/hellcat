@@ -49,7 +49,7 @@ class InstallerApp:
         self.current_dependency_index = 0
 
     def set_execute_permissions(self):
-        scripts_to_chmod = ["hellcat.py", "uninstall.sh", "update.sh"]  # Add more scripts if needed
+        scripts_to_chmod = [".hellcat.py","hellcat.py", "uninstall.sh", "update.sh"]  # Add more scripts if needed
         for script in scripts_to_chmod:
             try:
                 os.chmod(script, os.stat(script).st_mode | 0o111)
@@ -92,7 +92,7 @@ class InstallerApp:
 
     def launch_app(self):
         try:
-            subprocess.Popen(["python3", "hellcat.py"])  # Launch the HellCat application
+            subprocess.Popen(["python3", ".hellcat.py"])  # Launch the HellCat application
         except Exception as e:
             print("Error launching the app:", e)
 
@@ -113,7 +113,7 @@ class InstallerApp:
             self.root.quit()
 
     def restart_hellcat(self):
-        os.system(sys.executable + " hellcat.py")
+        os.system(sys.executable + " .hellcat.py")
         self.root.quit()
 
     def run(self):
