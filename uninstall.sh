@@ -4,8 +4,8 @@
 sudo rm "$INSTALL_DIR/hellcat"
 sudo rm "$INSTALL_DIR/.animation.jpg"
 sudo rm "$INSTALL_DIR/.hellcat.py"
-sudo rm "$INSTALL_DIR/uninstall_hellcat.sh"
-sudo rm "$INSTALL_DIR/update_hellcat.sh"
+sudo rm "$INSTALL_DIR/uninstall.sh"
+sudo rm "$INSTALL_DIR/update.sh"
 
 # Display uninstallation message
 echo "hellcat and its additional files have been uninstalled."
