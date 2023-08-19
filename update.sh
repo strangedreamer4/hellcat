@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# Navigate to the installation directory
+cd "$INSTALL_DIR"
+
+# Pull updates from the repository (replace with your update process)
+git pull origin master
+
+# Display update message
+echo "hellcat has been updated."
+
+
+
+
+
 # Define the repository URL
 REPO_URL="https://github.com/strangedreamer4/hellcat.git"
 # Define the repository directory
