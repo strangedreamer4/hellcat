@@ -1,5 +1,16 @@
 #!/bin/bash
 
+
+# Remove the installed files
+sudo rm "$INSTALL_DIR/hellcat"
+sudo rm "$INSTALL_DIR/.animation.jpg"
+sudo rm "$INSTALL_DIR/.hellcat.py"
+sudo rm "$INSTALL_DIR/uninstall.sh"
+sudo rm "$INSTALL_DIR/update.sh"
+
+# Display uninstallation message
+echo "hellcat and its additional files have been uninstalled."
+
 # Define the repository name
 REPO_NAME="hellcat"
 
