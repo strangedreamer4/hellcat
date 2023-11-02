@@ -25,7 +25,7 @@ db = firebase.database()
 class ChatApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Hacker Chat Terminal")
+        self.root.title("HeLlCaT Chat Terminal")
         self.root.geometry("1000x700")
         self.root.configure(bg="black")
 
